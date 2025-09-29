@@ -2,12 +2,13 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 800,
   "height": 450,
-  "title": {
-    "text": "Airports in Malaysia",
-    "fontSize": 20,
-    "font": "Arial"
+  "title": {"text": "Airports in Malaysia", "fontSize": 20, "font": "Arial"},
+  "projection": {
+    "type": "equalEarth",
+    "center": [110, 4],
+    "scale": 2500,
+    "translate": [420, 225]
   },
-  "projection": {"type": "equalEarth"},
   "layer": [
     {
       "mark": {"type": "rect", "fill": null, "stroke": "black", "strokeWidth": 2},
@@ -20,34 +21,30 @@
     },
     {
       "data": {"graticule": {"step": [10, 10]}},
-      "mark": {"type": "geoshape", "stroke": "lightgray", "strokeWidth": 1},
-      "projection": {
-        "type": "equalEarth",
-        "center": [110, 4],
-        "scale": 1500,
-        "translate": [400, 225]
-      }
+      "mark": {"type": "geoshape", "stroke": "lightgray", "strokeWidth": 1}
     },
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/lngg0042/Week-9-HW/main/my_state.json",
+        "url": "https://raw.githubusercontent.com/lngg0042/Week-10-HW/refs/heads/main/my_state.json",
         "format": {"type": "topojson", "feature": "my"}
       },
       "mark": {"type": "geoshape", "fill": "lightgray", "stroke": "white"}
     },
     {
-      "data": {
-        "url": "https://raw.githubusercontent.com/lngg0042/Week-9-HW/main/my-airports.csv"
-      },
+      "data": {"url": "https://raw.githubusercontent.com/lngg0042/Week-10-HW/refs/heads/main/my-airports.csv"},
       "transform": [
         {"filter": "datum.name != 'name'"},
-        {"filter": "datum.type != '#loc +airport +type'"}
+        {"filter": "datum.type != '#loc +airport +type'"},
+        {
+          "calculate": "datum.type == 'large_airport' ? 'Large Airport' : datum.type == 'medium_airport' ? 'Medium Airport' : datum.type == 'small_airport' ? 'Small Airport' : datum.type == 'heliport' ? 'Heliport' : datum.type == 'closed' ? 'Closed' : datum.type",
+          "as": "type_label"
+        }
       ],
       "mark": "circle",
       "params": [
         {
           "name": "airportType",
-          "select": {"type": "point", "fields": ["type"]},
+          "select": {"type": "point", "fields": ["type_label"]},
           "bind": "legend"
         }
       ],
@@ -55,34 +52,41 @@
         "longitude": {"field": "longitude_deg", "type": "quantitative"},
         "latitude": {"field": "latitude_deg", "type": "quantitative"},
         "size": {"value": 50},
-        "color": {
-          "field": "type",
-          "type": "nominal",
-          "title": "Airport Type",
-          "legend": {
-            "titleFontSize": 16,
-            "labelFontSize": 14,
-            "symbolSize": 100,
-            "labelExpr": "datum.label == 'closed' ? 'Closed' : datum.label == 'large_airport' ? 'Large Airport' : datum.label == 'medium_airport' ? 'Medium Airport' : datum.label == 'small_airport' ? 'Small Airport' : datum.label == 'heliport' ? 'Heliport' : datum.label"
-          }
-        },
-        "opacity": {
-          "condition": {"param": "airportType", "value": 1},
-          "value": 0.2
-        },
+        "color": {"field": "type_label", "type": "nominal", "title": "Airport Type"},
+        "opacity": {"condition": {"param": "airportType", "value": 1}, "value": 0.2},
         "tooltip": [
-          {"field": "name", "type": "nominal", "title": "Airport"},
-          {"field": "municipality", "type": "nominal", "title": "City"},
-          {"field": "iso_country", "type": "nominal", "title": "Country"},
-          {"field": "type", "type": "nominal", "title": "Type"}
+          {"field": "name", "title": "Airport"},
+          {"field": "municipality", "title": "City"},
+          {"field": "region_name", "title": "State"},
+          {"field": "type_label", "title": "Type"}
         ]
       }
+    },
+    {
+      "data": {
+        "values": [
+          {"state": "Johor", "lon": 103.5, "lat": 1.8},
+          {"state": "Penang", "lon": 100.3, "lat": 5.4},
+          {"state": "Sabah", "lon": 116.5, "lat": 5.5},
+          {"state": "Sarawak", "lon": 113.0, "lat": 2.0}
+        ]
+      },
+      "mark": {"type": "text", "fontSize": 12, "fontWeight": "bold", "color": "black", "dy": -5},
+      "encoding": {
+        "longitude": {"field": "lon"},
+        "latitude": {"field": "lat"},
+        "text": {"field": "state"}
+      }
+    },
+    {
+      "data": {"url": "https://raw.githubusercontent.com/lngg0042/Week-9-HW/main/my-airports.csv"},
+      "transform": [{"filter": "datum.type == 'large_airport'"}],
+      "mark": {"type": "text", "dy": -8, "fontSize": 10, "fontWeight": "bold", "color": "black"},
+      "encoding": {
+        "longitude": {"field": "longitude_deg"},
+        "latitude": {"field": "latitude_deg"},
+        "text": {"field": "name"}
+      }
     }
-  ],
-  "config": {
-    "view": {
-      "stroke": "black",
-      "strokeWidth": 2
-    }
-  }
+  ]
 }
