@@ -41,25 +41,27 @@
           "width": 800,
           "height": 450,
           "title": {"text": "Airports in Malaysia", "fontSize": 20, "font": "Arial"},
-          "projection": {"type": "equalEarth","center": [110, 4],"scale": 2500,"translate": [420, 225]},
+          "projection": {"type": "equalEarth", "center": [110, 4], "scale": 2500, "translate": [420, 225]},
           "layer": [
             {
-              "mark": {"type": "rect","fill": null,"stroke": "black","strokeWidth": 2},
-              "encoding": {"x": {"value": 0},"y": {"value": 0},"x2": {"value": 800},"y2": {"value": 450}}
+              "mark": {"type": "rect", "fill": null, "stroke": "black", "strokeWidth": 2},
+              "encoding": {"x": {"value": 0}, "y": {"value": 0}, "x2": {"value": 800}, "y2": {"value": 450}}
             },
             {
               "data": {"graticule": {"step": [10, 10]}},
-              "mark": {"type": "geoshape","stroke": "lightgray","strokeWidth": 1}
+              "mark": {"type": "geoshape", "stroke": "lightgray", "strokeWidth": 1}
             },
             {
               "data": {
                 "url": "https://raw.githubusercontent.com/lngg0042/Week-10-HW/refs/heads/main/my_state.json",
-                "format": {"type": "topojson","feature": "my"}
+                "format": {"type": "topojson", "feature": "my"}
               },
-              "mark": {"type": "geoshape","fill": "lightgray","stroke": "white"}
+              "mark": {"type": "geoshape", "fill": "lightgray", "stroke": "white"}
             },
             {
-              "data": {"url": "https://raw.githubusercontent.com/lngg0042/Week-10-HW/refs/heads/main/my-airports.csv"},
+              "data": {
+                "url": "https://raw.githubusercontent.com/lngg0042/Week-10-HW/refs/heads/main/my-airports.csv"
+              },
               "transform": [
                 {"filter": "datum.name != 'name'"},
                 {"filter": "datum.type != '#loc +airport +type'"},
@@ -70,83 +72,136 @@
               ],
               "mark": "circle",
               "params": [
-                {"name": "airportType","select": {"type": "point","fields": ["type_label"]},"bind": "legend"}
+                {
+                  "name": "airportType",
+                  "select": {"type": "point", "fields": ["type_label"]},
+                  "bind": "legend"
+                }
               ],
               "encoding": {
-                "longitude": {"field": "longitude_deg","type": "quantitative"},
-                "latitude": {"field": "latitude_deg","type": "quantitative"},
+                "longitude": {"field": "longitude_deg", "type": "quantitative"},
+                "latitude": {"field": "latitude_deg", "type": "quantitative"},
                 "size": {"value": 50},
                 "color": {
-                  "field": "type_label","type": "nominal","title": "Airport Type",
-                  "legend": {"titleFontSize": 15,"labelFontSize": 12,"symbolSize": 100,"symbolStrokeWidth": 4}
+                  "field": "type_label", "type": "nominal", "title": "Airport Type",
+                  "legend": {"titleFontSize": 15, "labelFontSize": 12, "symbolSize": 100, "symbolStrokeWidth": 4}
                 },
-                "opacity": {"condition": {"param": "airportType","value": 1},"value": 0.2},
+                "opacity": {"condition": {"param": "airportType", "value": 1}, "value": 0.2},
                 "tooltip": [
-                  {"field": "name","title": "Airport"},
-                  {"field": "municipality","title": "City"},
-                  {"field": "region_name","title": "State"},
-                  {"field": "type_label","title": "Type"}
+                  {"field": "name", "title": "Airport"},
+                  {"field": "municipality", "title": "City"},
+                  {"field": "region_name", "title": "State"},
+                  {"field": "type_label", "title": "Type"}
                 ]
               }
             },
             {
               "data": {
                 "values": [
-                  {"state": "Johor","lon": 103.5,"lat": 1.8},
-                  {"state": "Penang","lon": 100.3,"lat": 5.4},
-                  {"state": "Sabah","lon": 116.5,"lat": 5.5},
-                  {"state": "Sarawak","lon": 113.0,"lat": 2.0}
+                  {"state": "Johor", "lon": 103.5, "lat": 1.8},
+                  {"state": "Penang", "lon": 100.3, "lat": 5.4},
+                  {"state": "Sabah", "lon": 116.5, "lat": 5.5},
+                  {"state": "Sarawak", "lon": 113.0, "lat": 2.0}
                 ]
               },
-              "mark": {"type": "text","fontSize": 12,"fontWeight": "bold","color": "black","dy": -5},
-              "encoding": {"longitude": {"field": "lon"},"latitude": {"field": "lat"},"text": {"field": "state"}}
+              "mark": {"type": "text", "fontSize": 12, "fontWeight": "bold", "color": "black", "dy": -5},
+              "encoding": {
+                "longitude": {"field": "lon"},
+                "latitude": {"field": "lat"},
+                "text": {"field": "state"}
+              }
             },
             {
-              "data": {"url": "https://raw.githubusercontent.com/lngg0042/Week-9-HW/main/my-airports.csv"},
+              "data": {
+                "url": "https://raw.githubusercontent.com/lngg0042/Week-10-HW/refs/heads/main/my-airports.csv"
+              },
               "transform": [{"filter": "datum.type == 'large_airport'"}],
-              "mark": {"type": "text","dy": -8,"fontSize": 10,"fontWeight": "bold","color": "black"},
-              "encoding": {"longitude": {"field": "longitude_deg"},"latitude": {"field": "latitude_deg"},"text": {"field": "name"}}
+              "mark": {"type": "text", "dy": -8, "fontSize": 10, "fontWeight": "bold", "color": "black"},
+              "encoding": {
+                "longitude": {"field": "longitude_deg"},
+                "latitude": {"field": "latitude_deg"},
+                "text": {"field": "name"}
+              }
             }
           ]
         },
         {
           "width": 800,
           "height": 450,
-          "title": {"text": "Yearly Employment Trend (Total Persons Engaged)", "fontSize": 20, "font": "Arial", "anchor": "middle"},
+          "title": {
+            "text": "Yearly Employment Trend (Total Persons Engaged)",
+            "fontSize": 20,
+            "font": "Arial",
+            "anchor": "middle"
+          },
           "data": {
             "url": "https://raw.githubusercontent.com/lngg0042/Week-10-HW/refs/heads/main/Principal%20Statistics%20of%20Transportation%20and%20Storage%20Services%20by%20State%20dataset.csv"
           },
           "transform": [
-            {"aggregate": [{"op": "sum","field": "Total number of persons engaged ","as": "Total Persons Engaged"}],"groupby": ["Year"]},
-            {"window": [{"op": "first_value","field": "Total Persons Engaged","as": "BaseEmployment"}],"frame": [null,null],"sort": [{"field": "Year","order": "ascending"}]},
-            {"calculate": "(datum['Total Persons Engaged'] / datum['BaseEmployment']) * 100","as": "Employment Index"}
+            {
+              "aggregate": [{
+                "op": "sum",
+                "field": "Total number of persons engaged ",
+                "as": "Total Persons Engaged"
+              }],
+              "groupby": ["Year"]
+            },
+            {
+              "calculate": "(datum['Total Persons Engaged'] / 289715) * 100",
+              "as": "Employment Index"
+            }
           ],
           "layer": [
             {
-              "mark": {"type": "line","strokeWidth": 3,"color": "#1f77b4"},
+              "mark": {
+                "type": "line",
+                "strokeWidth": 3,
+                "color": "#1f77b4"
+              },
               "encoding": {
-                "x": {"field": "Year","type": "ordinal","title": "Year","sort": "ascending","axis": {"labelAngle": 0}},
-                "y": {"field": "Employment Index","type": "quantitative","title": "Employment Index (Base Year = 100)","scale": {"zero": false}}
+                "x": {
+                  "field": "Year",
+                  "type": "ordinal",
+                  "title": "Year",
+                  "sort": "ascending",
+                  "axis": {"labelAngle": 0}
+                },
+                "y": {
+                  "field": "Employment Index",
+                  "type": "quantitative",
+                  "title": "Employment Index (2010 = 100)",
+                  "scale": {"zero": false}
+                }
               }
             },
             {
-              "mark": {"type": "point","filled": true,"color": "#d62728","size": 80},
+              "mark": {
+                "type": "point",
+                "filled": true,
+                "color": "#d62728",
+                "size": 80
+              },
               "encoding": {
-                "x": {"field": "Year","type": "ordinal","sort": "ascending"},
-                "y": {"field": "Employment Index","type": "quantitative"},
+                "x": {"field": "Year", "type": "ordinal", "sort": "ascending"},
+                "y": {"field": "Employment Index", "type": "quantitative"},
                 "tooltip": [
-                  {"field": "Year","type": "ordinal"},
-                  {"field": "Total Persons Engaged","type": "quantitative","format": ","},
-                  {"field": "Employment Index","type": "quantitative","format": ".1f"}
+                  {"field": "Year", "type": "ordinal"},
+                  {"field": "Total Persons Engaged", "type": "quantitative", "format": ","},
+                  {"field": "Employment Index", "type": "quantitative", "format": ".1f"}
                 ]
               }
             },
             {
-              "mark": {"type": "text","dy": -10,"fontSize": 12,"color": "black"},
+              "mark": {
+                "type": "text",
+                "dy": -10,
+                "fontSize": 12,
+                "color": "black"
+              },
               "encoding": {
-                "x": {"field": "Year","type": "ordinal","sort": "ascending"},
-                "y": {"field": "Employment Index","type": "quantitative"},
-                "text": {"field": "Employment Index","type": "quantitative","format": ".0f"}
+                "x": {"field": "Year", "type": "ordinal", "sort": "ascending"},
+                "y": {"field": "Employment Index", "type": "quantitative"},
+                "text": {"field": "Employment Index", "type": "quantitative", "format": ".0f"}
               }
             }
           ]
@@ -158,4 +213,3 @@
   </script>
 </body>
 </html>
-
