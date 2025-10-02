@@ -1,4 +1,4 @@
-Year,State,Number of establishments,Value of gross output (RM'000),Value of intermediate input (RM'000),Value added (RM'000),Total number of persons engaged ,Salaries & wages paid (RM'000),Value of fixed assets (RM'000)
+Year,State,Number of establishments,Value of gross output,Value of intermediate input,Value added,Total number of persons engaged ,Salaries & wages paid,Value of fixed assets
 2010,Johor,5161,5606029,3197123,2408906,27156,587742,7700624
 2010,Kedah,2544,785386,454155,331232,7958,128458,277218
 2010,Kelantan,1499,144853,82566,62287,3025,24628,85770
@@ -63,3 +63,4 @@ Year,State,Number of establishments,Value of gross output (RM'000),Value of inte
 2017,W.P Kuala Lumpur,0,19681214,12386413,7294801,44147,1744107,42402252
 2017,W.P Labuan,0,1277597,750480,527116,1932,58766,1909401
 2017,W.P Putrajaya,0,31746,18527,13219,341,10971,2877
+
